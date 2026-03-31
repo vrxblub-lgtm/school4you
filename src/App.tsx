@@ -1,6 +1,5 @@
-import { useState, useEffect, FormEvent } from 'react';
+import { useState, FormEvent } from 'react';
 import { Search, BookOpen, GraduationCap, Layout, Gamepad2, ExternalLink, X } from 'lucide-react';
-import gamesData from './games.json';
 
 interface Game {
   id: string;
@@ -8,14 +7,27 @@ interface Game {
   url: string;
 }
 
+const GAMES_DATA: Game[] = [
+  {
+    "id": "2048",
+    "title": "Mathematical Logic Puzzle",
+    "url": "https://play2048.co/"
+  },
+  {
+    "id": "tetris",
+    "title": "Spatial Reasoning Exercise",
+    "url": "https://tetris.com/play-tetris"
+  },
+  {
+    "id": "chess",
+    "title": "Strategic Thinking Simulator",
+    "url": "https://www.chess.com/play/computer"
+  }
+];
+
 export default function App() {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedGame, setSelectedGame] = useState<Game | null>(null);
-  const [games, setGames] = useState<Game[]>([]);
-
-  useEffect(() => {
-    setGames(gamesData);
-  }, []);
 
   const handleSearch = (e: FormEvent) => {
     e.preventDefault();
@@ -98,11 +110,11 @@ export default function App() {
         <section id="tools">
           <div className="flex items-center justify-between mb-8">
             <h2 className="text-2xl font-bold text-slate-900">Interactive Learning Modules</h2>
-            <span className="text-sm text-slate-500 font-medium bg-slate-100 px-3 py-1 rounded-full">3 Modules Available</span>
+            <span className="text-sm text-slate-500 font-medium bg-slate-100 px-3 py-1 rounded-full">{GAMES_DATA.length} Modules Available</span>
           </div>
           
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {games.map((game) => (
+            {GAMES_DATA.map((game) => (
               <div 
                 key={game.id}
                 className="bg-white rounded-3xl overflow-hidden border border-slate-200 shadow-sm hover:border-indigo-300 transition-all cursor-pointer group"
